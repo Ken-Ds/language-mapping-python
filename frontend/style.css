@@ -1,0 +1,290 @@
+/* MAIN PAGE */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Georgia', serif;
+    background-color: #f5e9dc;
+    color: #2c1f1f;
+    padding: 20px;
+  }
+  
+  /* Container holds left and right panels */
+  .container {
+    max-width: 1500px;
+    margin: auto;
+    background-color: #fdf6ee;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  /* Back Button */
+  .back-button a {
+    text-decoration: none;
+    font-size: 24px;
+    color: #2c1f1f;
+    background: #fcebd5;
+    border: 2px solid #2c1f1f;
+    padding: 5px 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  /* Left Panel */
+  .left-panel {
+    flex: 1 1 45%;
+  }
+  
+  .left-panel h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-family: 'Arial Black', sans-serif;
+  }
+  
+  .left-panel p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 10px;
+  }
+  
+  /* Right Panel with Map */
+  .right-panel {
+    flex: 1 1 50%;
+    position: relative;
+  }
+  
+  .right-panel img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 2px solid #2c1f1f;
+    border-radius: 8px;
+  }
+  
+  /* Legend Styling */
+  .legend {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    line-height: 1.6;
+  }
+  
+  .legend strong {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .legend-item {
+    display: inline-block;
+    margin-right: 8px;
+    font-weight: bold;
+  }
+  
+  .legend-item.ilocosnorte {
+    color: #4b0082;
+  }
+  
+  .legend-item.ilocossur {
+    color: #a52a2a;
+  }
+  
+  .legend-item.launion {
+    color: #c07f00;
+  }
+  
+  .legend-item.pangasinan {
+    color: #228b22;
+  }
+  
+  /* Province Content */
+  .province-content h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #005baf;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-style: italic;
+  }
+  
+  .province-content p {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+  
+  /* Tabs */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  .nav-tabs button {
+    padding: 10px 18px;
+    margin: 0 5px;
+    border: none;
+    background-color: #4e342e;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 3px solid transparent;
+  }
+  
+  .nav-tabs button.active {
+    background-color: #d7b88d;
+    color: #2c1f1f;
+    border-bottom: 3px solid #2c1f1f;
+  }
+  
+  /* Stats Box */
+  .stats-box {
+    background-color: #fefefe;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .stats-box p {
+    margin-bottom: 20px;
+  }
+  
+  .columns {
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+  }
+  
+  /* LA UNION PAGE */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1e3cf;
+    color: #2e1d12;
+  }
+  
+  .la-union-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+  }
+  
+  .la-union-left {
+    width: 65%;
+  }
+  
+  .la-union-back-button a {
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+  
+  .la-union-content h2 {
+    font-weight: bold;
+    font-size: 28px;
+    text-align: center;
+  }
+  
+  .la-union-subtitle {
+    font-family: serif;
+    text-align: center;
+    color: #1b4b8c;
+    font-style: italic;
+    font-weight: 500;
+  }
+  
+  .la-union-content p {
+    font-size: 14px;
+    text-align: center;
+    padding: 0 30px;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  
+  .la-union-tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .la-union-tabs button {
+    background-color: #472e1f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .la-union-tabs button.active {
+    background-color: #d1a05e;
+    color: black;
+  }
+  
+  .language-section,
+  .delicacy-section,
+  .tourist-section,
+  .statistics-section {
+    background-color: #f4e7d2;
+    padding: 40px;
+    border: 1px solid #b79d87;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  /* LA UNION MAP */
+  .la-union-map-wrapper {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .la-union-map-wrapper img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* LA UNION LANGUAGE */
+.language-section {
+    margin-top: 30px;
+  }
+  
+  .language-desc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
