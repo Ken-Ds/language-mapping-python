@@ -1,5 +1,5 @@
 # app/routes/phrase_routes.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.models import Phrase
 from app.services import phrase_service as ps
 
