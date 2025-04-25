@@ -1,52 +1,22 @@
 # app/routes/dialect_routes.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.models import Dialect
-from app.db import get_connection
+from app.services import dialect_service as ds
 
 router = APIRouter()
 
 @router.get("/dialects", response_model=list[Dialect])
-def get_dialects():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM dialects")
-    result = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return result
+def read_dialects():
+    return ds.get_all_dialects()
 
 @router.post("/dialects")
-def create_dialect(dialect: Dialect):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO dialects (DIALECT_ID, DIALECT_NAME, LANGUAGE_ID) VALUES (%s, %s, %s)", 
-                   (dialect.DIALECT_ID, dialect.DIALECT_NAME, dialect.LANGUAGE_ID))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Dialect added successfully"}
+def add_dialect(dialect: Dialect):
+    return ds.create_dialect(dialect)
 
 @router.put("/dialects/{dialect_id}")
-def update_dialect(dialect_id: str, dialect: Dialect):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE dialects SET DIALECT_NAME = %s, LANGUAGE_ID = %s WHERE DIALECT_ID = %s",
-                   (dialect.DIALECT_NAME, dialect.LANGUAGE_ID, dialect_id))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Dialect not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Dialect updated successfully"}
+def modify_dialect(dialect_id: str, dialect: Dialect):
+    return ds.update_dialect(dialect_id, dialect)
 
 @router.delete("/dialects/{dialect_id}")
-def delete_dialect(dialect_id: str):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM dialects WHERE DIALECT_ID = %s", (dialect_id,))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Dialect not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Dialect deleted successfully"}
+def remove_dialect(dialect_id: str):
+    return ds.delete_dialect(dialect_id)

@@ -1,52 +1,22 @@
 # app/routes/municipality_routes.py
 from fastapi import APIRouter, HTTPException
 from app.models import Municipality
-from app.db import get_connection
+from app.services import municipality_service as ms
 
 router = APIRouter()
 
 @router.get("/municipalities", response_model=list[Municipality])
-def get_municipalities():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM municipalities")
-    result = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return result
+def read_municipalities():
+    return ms.get_all_municipalities()
 
 @router.post("/municipalities")
-def create_municipality(m: Municipality):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO municipalities (MUNICIPALITY_ID, NAME, INFORMATION, PROVINCE_ID) VALUES (%s, %s, %s, %s)", 
-                   (m.MUNICIPALITY_ID, m.NAME, m.INFORMATION, m.PROVINCE_ID))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Municipality added successfully"}
+def add_municipality(municipality: Municipality):
+    return ms.create_municipality(municipality)
 
 @router.put("/municipalities/{municipality_id}")
-def update_municipality(municipality_id: str, m: Municipality):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE municipalities SET NAME = %s, INFORMATION = %s, PROVINCE_ID = %s WHERE MUNICIPALITY_ID = %s",
-                   (m.NAME, m.INFORMATION, m.PROVINCE_ID, municipality_id))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Municipality not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Municipality updated successfully"}
+def modify_municipality(municipality_id: str, municipality: Municipality):
+    return ms.update_municipality(municipality_id, municipality)
 
 @router.delete("/municipalities/{municipality_id}")
-def delete_municipality(municipality_id: str):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM municipalities WHERE MUNICIPALITY_ID = %s", (municipality_id,))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Municipality not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Municipality deleted successfully"}
+def remove_municipality(municipality_id: str):
+    return ms.delete_municipality(municipality_id)

@@ -1,26 +1,13 @@
 from fastapi import APIRouter
 from app.models import ProvinceLanguage
-from app.db import get_connection
+from app.services import province_language_service as pls
 
 router = APIRouter()
 
 @router.get("/provincelanguages", response_model=list[ProvinceLanguage])
-def get_province_languages():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM provincelanguages")
-    result = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return result
+def read_province_languages():
+    return pls.get_all_province_languages()
 
 @router.post("/provincelanguages")
-def create_province_language(pl: ProvinceLanguage):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO provincelanguages (PROVINCE_ID, DIALECT_ID, PERCENTAGE) VALUES (%s, %s, %s)", 
-                   (pl.PROVINCE_ID, pl.DIALECT_ID, pl.PERCENTAGE))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "ProvinceLanguage added successfully"}
+def add_province_language(p: ProvinceLanguage):
+    return pls.create_province_language(p)

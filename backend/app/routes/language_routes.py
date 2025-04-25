@@ -1,53 +1,22 @@
 # app/routes/language_routes.py
 from fastapi import APIRouter
 from app.models import Language
-from app.db import get_connection
+from app.services import language_service as ls
 
 router = APIRouter()
 
 @router.get("/languages", response_model=list[Language])
-def get_languages():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM languages")
-    result = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return result
+def read_languages():
+    return ls.get_languages()
 
 @router.post("/languages")
-def create_language(language: Language):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO languages (LANGUAGE_ID, NAME) VALUES (%s, %s)",
-                   (language.LANGUAGE_ID, language.NAME))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Language added successfully"}
+def add_language(language: Language):
+    return ls.create_language(language)
 
 @router.put("/languages/{language_id}")
-def update_language(language_id: str, language: Language):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE languages SET NAME = %s WHERE LANGUAGE_ID = %s",
-                   (language.NAME, language_id))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Language not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Language updated successfully"}
+def modify_language(language_id: str, language: Language):
+    return ls.update_language(language_id, language)
 
 @router.delete("/languages/{language_id}")
-def delete_language(language_id: str):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM languages WHERE LANGUAGE_ID = %s", (language_id,))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Language not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Language deleted successfully"}
-
+def remove_language(language_id: str):
+    return ls.delete_language(language_id)

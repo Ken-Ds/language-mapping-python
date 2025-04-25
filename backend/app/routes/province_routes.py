@@ -1,52 +1,22 @@
 # app/routes/province_routes.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.models import Province
-from app.db import get_connection
+from app.services import province_service as ps
 
 router = APIRouter()
 
 @router.get("/provinces", response_model=list[Province])
-def get_provinces():
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM provinces")
-    result = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return result
+def read_provinces():
+    return ps.get_all_provinces()
 
 @router.post("/provinces")
-def create_province(province: Province):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO provinces (PROVINCE_ID, NAME, INFORMATION) VALUES (%s, %s, %s)", 
-                   (province.PROVINCE_ID, province.NAME, province.INFORMATION))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Province added successfully"}
+def add_province(province: Province):
+    return ps.create_province(province)
 
 @router.put("/provinces/{province_id}")
-def update_province(province_id: str, province: Province):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE provinces SET NAME = %s, INFORMATION = %s WHERE PROVINCE_ID = %s",
-                   (province.NAME, province.INFORMATION, province_id))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Province not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Province updated successfully"}
+def modify_province(province_id: str, province: Province):
+    return ps.update_province(province_id, province)
 
 @router.delete("/provinces/{province_id}")
-def delete_province(province_id: str):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM provinces WHERE PROVINCE_ID = %s", (province_id,))
-    conn.commit()
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Province not found")
-    cursor.close()
-    conn.close()
-    return {"message": "Province deleted successfully"}
+def remove_province(province_id: str):
+    return ps.delete_province(province_id)
