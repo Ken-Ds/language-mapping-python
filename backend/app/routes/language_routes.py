@@ -1,5 +1,5 @@
 # app/routes/language_routes.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.models import Language
 from app.db import get_connection
 
