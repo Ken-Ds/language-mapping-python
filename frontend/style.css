@@ -237,16 +237,19 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin:px ;
   padding: 0;
-  background-color: #f1e3cf;
+  background-color: #4b0082;
+  /*background-color: #f1e3cf;*/
   color: #2e1d12;
+  width: 100%;
 }
 
 .province-container {
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
-  max-width: 1350px;
+  padding: 0 ;
+  max-width: 100%;
   margin: 2px;
+  background-color: #E7D9C5;
 }
 
 .province-left {
@@ -264,7 +267,7 @@ body {
 .province-content h2 {
   font-family: Tenor;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 38px;
   text-align: center;
 }
 
@@ -276,12 +279,12 @@ body {
   font-weight: 500;
   font-family: Cinzel;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 28px;
   margin-bottom: 20px;
 }
 
 .province-content p {
-  font-size: 15px;
+  font-size: 23px;
   text-align: center;
   padding: 0 30px;
   font-weight: 500;
@@ -292,7 +295,8 @@ body {
 .province-tabs {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin-top: 50px;
+  
 }
 
 .province-tabs button {
@@ -301,7 +305,7 @@ body {
   border: none;
   padding: 10px 20px;
   margin: 10 5px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   cursor: pointer;
 }
@@ -311,6 +315,12 @@ body {
   color: black;
 }
 
+.province-tabs button.active {
+  background-color: #d1a05e;
+  color: black;
+}
+
+
 .language-section,
 .delicacy-section,
 .tourist-section,
@@ -319,7 +329,7 @@ body {
   padding: 40px;
   border: 1px solid #b79d87;
   text-align: center;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: bold;
   font-family: Handelson;
 }
@@ -330,7 +340,7 @@ body {
 }
 
 .language-desc {
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   line-height: 1.6;
 }
 
@@ -344,7 +354,7 @@ body {
 
 .la-union-map-wrapper img {
   max-width: 100%;
-  height: 50%;
+  height: 95%;
 }
 
 /* ILOCOS SUR MAP*/  
@@ -357,7 +367,7 @@ body {
 
 .ilocos-sur-map-wrapper img {
   max-width: 100%;
-  height: 50%;
+  height: 90%;
 }
 
 /* ILOCOS NORTE MAP */
@@ -370,7 +380,7 @@ body {
 
 .ilocos-norte-map-wrapper img {
   max-width: 100%;
-  height: 65%;
+  height: 95%;
 }
 
 /* PANGASINAN MAP*/
@@ -378,7 +388,7 @@ body {
   width: 30%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .pangasinan-map-wrapper img {
