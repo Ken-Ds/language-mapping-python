@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.models import MunicipalityLanguage
-from app.services import municipality_language_service as mls
+from app.services import municipalitylanguage_service as mls
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.models import ProvinceLanguage
-from app.services import province_language_service as pls
+from app.services import provincelanguage_service as pls
 
 router = APIRouter()
 
