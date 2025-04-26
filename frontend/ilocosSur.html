@@ -6,7 +6,7 @@
   <title>Ilocos Sur</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body onload="initializePage()"> <!-- Automatically initialize the page on load -->
   <div class="province-container">
     <!-- Left Side: Content -->
     <div class="province-left">
@@ -41,20 +41,40 @@
 
       <!-- SECTIONS -->
       <div id="statistics" class="statistics-section">
-        <p>This shows the statistics about the languages spoken in the area.</p>
-        <!-- <div class="columns">
-          <span>EACH MUNICIPALITY(TOP 3)</span>
-          <span>OVERALL (TOP 10)</span>
-        </div> -->
-
         <div class="columns">
+          <!-- Municipality Top 3 -->
           <div class="municipality-stats">
-            <h3>Top 3 Languages for Each Municipality</h3>
-            <div id="municipalityStats"></div> <!-- Placeholder for dynamic data -->
+            <h3>Municipality (Top 3)</h3>
+            <select id="municipalityDropdown" onchange="fetchMunicipalityTop3Dialects(this.value)">
+              <!-- Dynamic dropdown options will be inserted here -->
+            </select>
+            <table id="municipalityTable">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic rows will be inserted here -->
+              </tbody>
+            </table>
           </div>
+
+          <!-- Overall Top 10 -->
           <div class="overall-stats">
-            <h3>Overall Top 10 Languages</h3>
-            <div id="overallStats"></div> <!-- Placeholder for dynamic data -->
+            <h3>Overall (Top 10)</h3>
+            <table id="overallTable">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic rows will be inserted here -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -74,15 +94,17 @@
       </div>
     
       <div id="delicacy" class="delicacy-section" style="display:none;">
-        <p>These are foods that are famous in this place.</p>
-
-        <ul class="delicacy-list"></ul>
+        <p>These are foods that are famous in this place:</p>
+        <ul class="delicacy-list">
+          <!-- Dynamic list items will be inserted here -->
+        </ul>
       </div>
 
       <div id="tourist" class="tourist-section" style="display:none;">
-        <p>These are tourist destinations that are popular in this place.</p>
-      
-        <ul class="tourist-list"></ul>
+        <p>These are tourist destinations that are popular in this place:</p>
+        <ul class="tourist-list">
+          <!-- Dynamic list items will be inserted here -->
+        </ul>
       </div>
     </div>
 
@@ -94,6 +116,12 @@
 
   <!-- Section Toggle Script -->
   <script>
+    function initializePage() {
+      // Show the statistics section by default
+      showSection('statistics');
+      fetchIlocosSurStatistics();
+    }
+
     function showSection(sectionId) {
       const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
       sectionIds.forEach(id => {

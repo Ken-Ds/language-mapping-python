@@ -6,7 +6,7 @@
   <title>Pangasinan</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body onload="initializePage()"> <!-- Automatically initialize the page on load -->
   <div class="province-container">
     <!-- Left Side: Content -->
     <div class="province-left">
@@ -18,13 +18,12 @@
       <!-- Title & Description -->
       <div class="province-content">
         <h2>PANGASINAN</h2>
-        <h3 class="province-subtitle">“A Taste of Tradition by the Sea”</h3>
+        <h3 class="province-subtitle">“The Salt Capital of the Philippines”</h3>
         <p>
-          Pangasinan is where coastlines stretch endlessly and culture flows
-          as deep as the sea. The province offers a calming blend of nature,
-          heritage, and hospitality. Known for its flavorful cuisine and strong
-          sense of community, it celebrates life through every dish, dance, and
-          devotion. In Pangasinan, you don’t just visit — you feel at home.
+          Pangasinan is a province rich in history, culture, and natural beauty.
+          Known for its Hundred Islands National Park and its vibrant festivals,
+          Pangasinan offers a unique blend of adventure and tradition. It’s a
+          place where the past and present come together in harmony.
         </p>
       </div>
 
@@ -39,22 +38,42 @@
       <!-- Border under tabs -->
       <div class="tab-border"></div>
 
-      <!-- Sections -->
+      <!-- SECTIONS -->
       <div id="statistics" class="statistics-section">
-        <p>This shows the statistics about the languages spoken in the area.</p>
-        <!-- <div class="columns">
-          <span>EACH MUNICIPALITY(TOP 3)</span>
-          <span>OVERALL (TOP 10)</span>
-        </div> -->
-
         <div class="columns">
+          <!-- Municipality Top 3 -->
           <div class="municipality-stats">
-            <h3>Top 3 Languages for Each Municipality</h3>
-            <div id="municipalityStats"></div> <!-- Placeholder for dynamic data -->
+            <h3>Municipality (Top 3)</h3>
+            <select id="municipalityDropdown" onchange="fetchMunicipalityTop3Dialects(this.value)">
+              <!-- Dynamic dropdown options will be inserted here -->
+            </select>
+            <table id="municipalityTable">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic rows will be inserted here -->
+              </tbody>
+            </table>
           </div>
+
+          <!-- Overall Top 10 -->
           <div class="overall-stats">
-            <h3>Overall Top 10 Languages</h3>
-            <div id="overallStats"></div> <!-- Placeholder for dynamic data -->
+            <h3>Overall (Top 10)</h3>
+            <table id="overallTable">
+              <thead>
+                <tr>
+                  <th>Language</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic rows will be inserted here -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -72,17 +91,19 @@
           </table>
         </div>
       </div>
-
+    
       <div id="delicacy" class="delicacy-section" style="display:none;">
-        <p>These are foods that are famous in this place.</p>
-
-        <ul class="delicacy-list"></ul>
+        <p>These are foods that are famous in this place:</p>
+        <ul class="delicacy-list">
+          <!-- Dynamic list items will be inserted here -->
+        </ul>
       </div>
 
       <div id="tourist" class="tourist-section" style="display:none;">
-        <p>These are tourist destinations that are popular in this place.</p>
-      
-        <ul class="tourist-list"></ul>
+        <p>These are tourist destinations that are popular in this place:</p>
+        <ul class="tourist-list">
+          <!-- Dynamic list items will be inserted here -->
+        </ul>
       </div>
     </div>
 
@@ -94,6 +115,12 @@
 
   <!-- Section Toggle Script -->
   <script>
+    function initializePage() {
+      // Show the statistics section by default
+      showSection('statistics');
+      fetchPangasinanStatistics();
+    }
+
     function showSection(sectionId) {
       const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
       sectionIds.forEach(id => {

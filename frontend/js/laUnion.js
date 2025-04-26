@@ -1,3 +1,113 @@
+async function fetchLaUnionStatistics() {
+  try {
+    const provinceId = 'P003';
+
+    // Fetch overall top 10 languages
+    await fetchTop10Languages(provinceId);
+
+    // Fetch municipalities for the dropdown
+    await fetchAllMunicipalities(provinceId);
+
+  } catch (error) {
+    console.error('Error fetching statistics:', error);
+  }
+}
+
+async function fetchTop10Languages(provinceId) {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/provincelanguages/top10/${provinceId}`);
+    const data = await response.json();
+
+    const overallTableBody = document.querySelector('#overallTable tbody');
+    overallTableBody.innerHTML = ''; // Clear existing rows
+
+    if (data.length === 0) {
+      const noDataRow = document.createElement('tr');
+      noDataRow.innerHTML = `
+        <td colspan="2">No data available.</td>
+      `;
+      overallTableBody.appendChild(noDataRow);
+      return;
+    }
+
+    // Populate the table with the top 10 languages
+    data.forEach(language => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${language.DIALECT_NAME}</td>
+        <td>${language.PERCENTAGE}</td>
+      `;
+      overallTableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error fetching top 10 languages:', error);
+  }
+}
+
+async function fetchAllMunicipalities(provinceId) {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/municipalities/province/${provinceId}`);
+    const data = await response.json();
+
+    const municipalityDropdown = document.querySelector('#municipalityDropdown');
+    municipalityDropdown.innerHTML = ''; // Clear existing options
+
+    if (data.length === 0) {
+      const noDataOption = document.createElement('option');
+      noDataOption.textContent = 'No municipalities available';
+      noDataOption.disabled = true;
+      municipalityDropdown.appendChild(noDataOption);
+      return;
+    }
+
+    // Populate dropdown with municipalities
+    data.forEach(municipality => {
+      const option = document.createElement('option');
+      option.value = municipality.MUNICIPALITY_ID; // Use MUNICIPALITY_ID as the value
+      option.textContent = municipality.NAME; // Display the NAME field
+      municipalityDropdown.appendChild(option);
+    });
+
+    // Fetch Top 3 Dialects for the First Municipality
+    if (data.length > 0) {
+      fetchMunicipalityTop3Dialects(data[0].MUNICIPALITY_ID);
+    }
+  } catch (error) {
+    console.error('Error fetching municipalities:', error);
+  }
+}
+
+async function fetchMunicipalityTop3Dialects(municipalityId) {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/municipalitylanguages/top3/${municipalityId}`);
+    const data = await response.json();
+
+    const municipalityTableBody = document.querySelector('#municipalityTable tbody');
+    municipalityTableBody.innerHTML = ''; // Clear existing rows
+
+    if (data.length === 0) {
+      const noDataRow = document.createElement('tr');
+      noDataRow.innerHTML = `
+        <td colspan="2">No data available.</td>
+      `;
+      municipalityTableBody.appendChild(noDataRow);
+      return;
+    }
+
+    // Populate the table with the top 3 dialects
+    data.forEach(language => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${language.DIALECT_NAME}</td>
+        <td>${language.percentage}</td>
+      `;
+      municipalityTableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error fetching municipality top 3 dialects:', error);
+  }
+}
+
 async function fetchLaUnionLanguage() {
   const provinceId = 'P003';
   const response = await fetch(`http://127.0.0.1:8000/phrases/comparison/${provinceId}`);
@@ -64,98 +174,9 @@ async function fetchLaUnionLanguage() {
   });
 }
 
-
-async function fetchLaUnionStatistics() {
-  try {
-    const provinceId = 'P003'; // La Union
-    const response = await fetch(`http://127.0.0.1:8000/statistics/${provinceId}`);
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-
-    const municipalityStatsSection = document.querySelector('#municipalityStats');
-    const overallStatsSection = document.querySelector('#overallStats');
-
-    municipalityStatsSection.innerHTML = ''; // Clear existing stats
-    overallStatsSection.innerHTML = ''; // Clear existing stats
-
-    if (data.length === 0) {
-      const noDataItem = document.createElement('p');
-      noDataItem.textContent = 'No language data available.';
-      municipalityStatsSection.appendChild(noDataItem);
-      overallStatsSection.appendChild(noDataItem);
-      return;
-    }
-
-    // Step 1: Display Top 3 Languages for Each Municipality
-    data.forEach(municipality => {
-      const statItem = document.createElement('div');
-      statItem.classList.add('stat-item');
-
-      const title = document.createElement('h4');
-      title.textContent = municipality.name; // Municipality Name
-      statItem.appendChild(title);
-
-      const languageList = document.createElement('ul');
-
-      municipality.languages.slice(0, 3).forEach(language => { // Only take top 3 languages
-        const listItem = document.createElement('li');
-        listItem.textContent = language;
-        languageList.appendChild(listItem);
-      });
-
-      statItem.appendChild(languageList);
-      municipalityStatsSection.appendChild(statItem);
-    });
-
-    // Step 2: Display Overall Top 10 Languages
-    const languageCounts = {};
-
-    data.forEach(municipality => {
-      municipality.languages.forEach(language => {
-        if (!languageCounts[language]) {
-          languageCounts[language] = 0;
-        }
-        languageCounts[language]++;
-      });
-    });
-
-    const topLanguages = Object.entries(languageCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .map(([language]) => language);
-
-    const overallStatItem = document.createElement('div');
-    overallStatItem.classList.add('stat-item');
-
-    const overallTitle = document.createElement('h4');
-    overallTitle.textContent = 'Overall Top 10 Languages';
-    overallStatItem.appendChild(overallTitle);
-
-    const overallLanguageList = document.createElement('ul');
-
-    topLanguages.forEach(language => {
-      const listItem = document.createElement('li');
-      listItem.textContent = language;
-      overallLanguageList.appendChild(listItem);
-    });
-
-    overallStatItem.appendChild(overallLanguageList);
-    overallStatsSection.appendChild(overallStatItem);
-
-  } catch (error) {
-    console.error('Error fetching La Union statistics:', error);
-  }
-}
-
-
-
 async function fetchLaUnionDelicacies() {
   try {
-    const provinceId = 'P003'; // La Union
+    const provinceId = 'P003';
     const response = await fetch(`http://127.0.0.1:8000/popular/foods/${provinceId}`);
 
     if (!response.ok) {
@@ -190,7 +211,7 @@ async function fetchLaUnionDelicacies() {
 
 async function fetchLaUnionTouristSpots() {
   try {
-    const provinceId = 'P003'; // La Union
+    const provinceId = 'P003';
     const response = await fetch(`http://127.0.0.1:8000/popular/tourist-spots/${provinceId}`);
 
     if (!response.ok) {
@@ -227,4 +248,3 @@ async function fetchLaUnionTouristSpots() {
     console.error('Error fetching La Union tourist spot data:', error);
   }
 }
-
