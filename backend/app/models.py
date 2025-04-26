@@ -36,3 +36,10 @@ class Province(BaseModel):
     PROVINCE_ID: str
     NAME: str
     INFORMATION: str
+
+class Popular(BaseModel):
+    POPULAR_ID: str
+    NAME: str
+    TYPE: str
+    LOCATION: str
+    PROVINCE_ID: str
