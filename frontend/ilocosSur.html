@@ -31,7 +31,7 @@
       <!-- Tabs -->
       <div class="province-tabs">
         <button onclick="showSection('statistics')" class="active">STATISTICS</button>
-        <button onclick="showSection('language')">LANGUAGE</button>
+        <button onclick="showSection('language'); fetchIlocosSurLanguage();">LANGUAGE</button>
         <button onclick="showSection('delicacy')">DELICACY</button>
         <button onclick="showSection('tourist')">TOURIST SPOT</button>
       </div>
@@ -41,7 +41,7 @@
 
       <!-- Sections -->
       <div id="statistics" class="statistics-section">
-        <p>This shows the statistics about the languages spoken in the area.</p>
+        <p>This shows the statistics about the languages spoken in Ilocos Sur.</p>
         <div class="columns">
           <span>EACH MUNICIPALITY(s)</span>
           <span>OVERALL (TOP 10)</span>
@@ -49,48 +49,58 @@
       </div>
 
       <div id="language" class="language-section" style="display: none;">
-        <p>This presents the languages identified from translated words based on the statistics results.</p>
+        <p>This presents the major languages spoken by the people of Ilocos Sur, gathered from survey data.</p>
+        <div class="table-container">
+          <table id="phraseTable">
+            <thead>
+              <!-- Dynamic header will be inserted here -->
+            </thead>
+            <tbody>
+              <!-- Dynamic rows will be inserted here -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="delicacy" class="delicacy-section" style="display: none;">
-        <p>These are the famous delicacies you must try when visiting Ilocos Sur.</p>
+        <p>Here are some iconic dishes and delicacies from Ilocos Sur that you must experience!</p>
       </div>
 
       <div id="tourist" class="tourist-section" style="display: none;">
-        <p>These are the tourist destinations that are popular and well-loved in Ilocos Sur.</p>
+        <p>Discover the top tourist attractions and destinations that make Ilocos Sur unforgettable.</p>
       </div>
     </div>
 
     <!-- Right Side: Map -->
     <div class="ilocos-sur-map-wrapper">
-      <img src="images/ilocosSurMap.png" alt="Ilocos Sur Municipalities" />
+      <img src="images/ilocosSurMap.png" alt="Map of Ilocos Sur" />
     </div>
   </div>
 
+  <!-- Section Toggle Script -->
   <script>
     function showSection(sectionId) {
-      // Get all section IDs
       const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
-  
-      // Loop through each section
       sectionIds.forEach(id => {
         const section = document.getElementById(id);
         if (section) {
           section.style.display = (id === sectionId) ? 'block' : 'none';
         }
       });
-  
-      // Handle active button class
+
       const buttons = document.querySelectorAll('.province-tabs button');
       buttons.forEach(btn => btn.classList.remove('active'));
-  
+
       const clickedButton = Array.from(buttons).find(btn =>
-        btn.getAttribute('onclick') === `showSection('${sectionId}')`
+        btn.getAttribute('onclick')?.includes(`showSection('${sectionId}')`)
       );
       if (clickedButton) {
         clickedButton.classList.add('active');
       }
     }
   </script>
+
+  <!-- Link to fetcher script -->
+  <script src="js/ilocosSur.js"></script>
 </body>
 </html>

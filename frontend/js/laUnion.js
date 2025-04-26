@@ -1,82 +1,68 @@
 async function fetchLaUnionLanguage() {
-  try {
-    const provinceId = 'P003'; // La Union
-    const response = await fetch(`http://127.0.0.1:8000/popular/foods/P003`);
+  const provinceId = 'P003';
+  const response = await fetch(`http://127.0.0.1:8000/phrases/comparison/${provinceId}`);
+  const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+  const table = document.getElementById('phraseTable');
+  const thead = table.querySelector('thead');
+  const tbody = table.querySelector('tbody');
 
-    const data = await response.json();
+  thead.innerHTML = '';
+  tbody.innerHTML = '';
 
-    const table = document.querySelector('#phraseTable');
-    const tableHead = table.querySelector('thead');
-    const tableBody = table.querySelector('tbody');
-
-    tableHead.innerHTML = '';
-    tableBody.innerHTML = '';
-
-    if (data.length === 0) {
-      const noDataRow = document.createElement('tr');
-      const noDataCell = document.createElement('td');
-      noDataCell.textContent = 'No translations available.';
-      noDataCell.colSpan = 10;
-      noDataRow.appendChild(noDataCell);
-      tableBody.appendChild(noDataRow);
-      return;
-    }
-
-    // Step 1: Identify Top 10 Languages
-    const languageCounts = {};
-
-    data.forEach(row => {
-      Object.keys(row.translations).forEach(lang => {
-        if (!languageCounts[lang]) {
-          languageCounts[lang] = 0;
-        }
-        languageCounts[lang]++;
-      });
-    });
-
-    const topLanguages = Object.entries(languageCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .map(([lang]) => lang);
-
-    // Step 2: Create table header with top 10 languages
-    const headerRow = document.createElement('tr');
-    topLanguages.forEach(lang => {
-      const th = document.createElement('th');
-      th.textContent = lang;
-      headerRow.appendChild(th);
-    });
-    tableHead.appendChild(headerRow);
-
-    // Step 3: Create rows for each phrase translation
-    data.forEach(row => {
-      const tr = document.createElement('tr');
-      topLanguages.forEach(lang => {
-        const td = document.createElement('td');
-        td.textContent = row.translations[lang] || '-'; // dash if no translation available
-        tr.appendChild(td);
-      });
-      tableBody.appendChild(tr);
-    });
-
-  } catch (error) {
-    console.error('Error fetching La Union language data:', error);
-  }
-}
-
-data.forEach(row => {
-  const tr = document.createElement('tr');
-  topLanguages.forEach(lang => {
-    const td = document.createElement('td');
-    td.textContent = row.translations[lang] || ''; // Leave empty if no translation available
-    tr.appendChild(td);
+  // Step 1: Collect all unique languages
+  const languagesSet = new Set();
+  data.forEach(row => {
+    Object.keys(row.translations).forEach(lang => languagesSet.add(lang));
   });
-  tableBody.appendChild(tr);
-});
+
+  const languages = Array.from(languagesSet).sort();
+
+  // Step 2: Create header row
+  const headerRow = document.createElement('tr');
+  const englishHeader = document.createElement('th');
+  englishHeader.textContent = 'English';
+  headerRow.appendChild(englishHeader);
+
+  languages.forEach(lang => {
+    const th = document.createElement('th');
+    th.textContent = lang;
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+
+  // Step 3: Group data by English phrase
+  const groupedData = {};
+  data.forEach(row => {
+    const englishPhrase = row.english_translation || '';
+    if (!groupedData[englishPhrase]) {
+      groupedData[englishPhrase] = {};
+    }
+    Object.keys(row.translations).forEach(lang => {
+      groupedData[englishPhrase][lang] = row.translations[lang];
+    });
+  });
+
+  // Step 4: Create data rows
+  Object.keys(groupedData).forEach(englishPhrase => {
+    const tr = document.createElement('tr');
+
+    // Add English phrase
+    const englishCell = document.createElement('td');
+    englishCell.textContent = englishPhrase;
+    tr.appendChild(englishCell);
+
+    // Add translations for each language
+    languages.forEach(lang => {
+      const td = document.createElement('td');
+      td.textContent = groupedData[englishPhrase][lang] || ''; // Leave empty if no translation
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+}
 
 
 async function fetchLaUnionStatistics() {

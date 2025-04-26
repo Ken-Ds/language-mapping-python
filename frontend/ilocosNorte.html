@@ -31,7 +31,7 @@
       <!-- Tabs -->
       <div class="province-tabs">
         <button onclick="showSection('statistics')" class="active">STATISTICS</button>
-        <button onclick="showSection('language')">LANGUAGE</button>
+        <button onclick="showSection('language'); fetchIlocosNorteLanguage();">LANGUAGE</button>
         <button onclick="showSection('delicacy')">DELICACY</button>
         <button onclick="showSection('tourist')">TOURIST SPOT</button>
       </div>
@@ -48,30 +48,27 @@
         </div>
       </div>
 
-        <div id="language" class="language-section" style="display: none;">
-          <p>This presents the languages identified from translated words based on the overall results of the statistics.</p>
-          
+      <div id="language" class="language-section" style="display: none;">
+        <p>This presents the major languages spoken by the people of Ilocos Norte, gathered from survey data.</p>
+        <div class="table-container">
           <table id="phraseTable">
             <thead>
-              <tr>
-                <th>Phrase</th>
-                <th>Translations</th>
-              </tr>
+              <!-- Dynamic header will be inserted here -->
             </thead>
             <tbody>
-              <!-- Dynamic Data will be inserted here -->
+              <!-- Dynamic rows will be inserted here -->
             </tbody>
           </table>
         </div>
+      </div>
 
       <div id="delicacy" class="delicacy-section" style="display: none;">
-        <p>These are the foods that are famous in Ilocos Norte.</p>
+        <p>Here are some iconic dishes and delicacies from Ilocos Norte that you must experience!</p>
       </div>
 
       <div id="tourist" class="tourist-section" style="display: none;">
-        <p>These are tourist destinations that are popular in Ilocos Norte.</p>
+        <p>Discover the top tourist attractions and destinations that make Ilocos Norte unforgettable.</p>
       </div>
-
     </div>
 
     <!-- Right Side: Map -->
@@ -80,30 +77,30 @@
     </div>
   </div>
 
+  <!-- Section Toggle Script -->
   <script>
     function showSection(sectionId) {
-      // Get all section IDs
       const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
-  
-      // Loop through each section
       sectionIds.forEach(id => {
         const section = document.getElementById(id);
         if (section) {
           section.style.display = (id === sectionId) ? 'block' : 'none';
         }
       });
-  
-      // Handle active button class
+
       const buttons = document.querySelectorAll('.province-tabs button');
       buttons.forEach(btn => btn.classList.remove('active'));
-  
+
       const clickedButton = Array.from(buttons).find(btn =>
-        btn.getAttribute('onclick') === `showSection('${sectionId}')`
+        btn.getAttribute('onclick')?.includes(`showSection('${sectionId}')`)
       );
       if (clickedButton) {
         clickedButton.classList.add('active');
       }
     }
   </script>
+
+  <!-- Link to fetcher script -->
+  <script src="js/ilocosNorte.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Union - Statistics</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="../frontend/js/laUnion.js" defer></script>
+  <script src="js/laUnion.js" defer></script>
 
 </head>
 <body>
@@ -58,17 +58,20 @@
           </div>
         </div>
   
-        <div id="language" class="language-section" style="display:none;">
-          <p>This presents the languages identified from translated words...</p>
-          
-          <!-- TABLE FOR LANGUAGE TRANSLATIONS -->
-          <table id="phraseTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-      </div>
+        <div id="language" class="language-section" style="display: none;">
+          <p>This presents the major languages spoken by the people of Pangasinan, gathered from survey data.</p>
+          <div class="table-container">
+            <table id="phraseTable">
+              <thead>
+                <!-- Dynamic header will be inserted here -->
+              </thead>
+              <tbody>
+                <!-- Dynamic rows will be inserted here -->
+              </tbody>
+            </table>
+          </div>
         </div>
-  
+      
         <div id="delicacy" class="delicacy-section" style="display:none;">
           <p>These are foods that are famous in this place.</p>
 
@@ -80,9 +83,8 @@
         
           <ul class="tourist-list"></ul>
         </div>
-  
       </div>
-  
+    
       <!-- Map -->
       <div class="la-union-map-wrapper">
         <img src="images/laUnionMap.png" alt="Map of La Union" />
