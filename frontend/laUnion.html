@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Union - Statistics</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="province-container">
+      <!-- Back Button, Title, etc. -->
+      <div class="province-left">
+        <div class="province-back-button">
+          <a href="index.html">&#8592;</a>
+        </div>
+  
+        <div class="province-content">
+          <h2>LA UNION</h2>
+          <h3 class="province-subtitle">“The Soil of the North’s Coastline”</h3>
+          <p>La Union is all about laid-back vibes and natural connection...</p>
+        </div>
+  
+        <!-- Tabs -->
+        <div class="province-tabs">
+          <button onclick="showSection('statistics')" class="active">STATISTICS</button>
+          <button onclick="showSection('language')">LANGUAGE</button>
+          <button onclick="showSection('delicacy')">DELICACY</button>
+          <button onclick="showSection('tourist')">TOURIST SPOT</button>
+        </div>
+  
+        <!-- SECTIONS -->
+        <div id="statistics" class="province-section">
+          <h3>Statistics Section</h3>
+          <p>This shows the statistics about the languages spoken in the area.</p>
+          <div class="columns">
+            <span>EACH MUNICIPALITY(s)</span>
+            <span>OVERALL (TOP 10)</span>
+          </div>
+        </div>
+  
+        <div id="language" class="province-section" style="display:none;">
+          <h3>Language Section</h3>
+          <p>This presents the languages identified from translated words...</p>
+        </div>
+  
+        <div id="delicacy" class="province-section" style="display:none;">
+          <h3>Delicacy Section</h3>
+          <p>These are foods that are famous in this place.</p>
+        </div>
+  
+        <div id="tourist" class="province-section" style="display:none;">
+          <h3>Tourist Spots Section</h3>
+          <p>These are tourist destinations that are popular in this place.</p>
+        </div>
+  
+      </div>
+  
+      <!-- Map -->
+      <div class="la-union-map-wrapper">
+        <img src="images/laUnionMap.png" alt="Map of La Union" />
+      </div>
+    </div>
+  
+    <script>
+      function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll('.province-section');
+        sections.forEach(sec => sec.style.display = 'none');
+  
+        // Show the selected section
+        document.getElementById(sectionId).style.display = 'block';
+  
+        // Update active tab button
+        const buttons = document.querySelectorAll('.province-tabs button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.province-tabs button[onclick="showSection('${sectionId}')"]`).classList.add('active');
+      }
+    </script>
+  
+  </body>
+  
