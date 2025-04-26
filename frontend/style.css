@@ -222,27 +222,22 @@ body {
   margin-bottom: 30px;
 }
 
-.stats-box p {
-  margin-bottom: 20px;
-}
-
 .columns {
   display: flex;
   justify-content: space-around;
   font-weight: bold;
+  font-size: 20px;
 }
-/* GENERAL PAGE */
 
+/* GENERAL PAGE */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin:px ;
   padding: 0;
   background-color: #e7d9c5;
-  /*background-color: #f1e3cf;*/
   color: #2e1d12;
   width: 100%;
 }
-
 
 .province-container {
   display: flex;
@@ -290,14 +285,12 @@ body {
   padding: 0 30px;
   font-weight: 500;
   margin-top: 10px;
-  
 }
 
 .province-tabs {
   display: flex;
   justify-content: center;
   margin-top: 50px;
-  
 }
 
 .province-tabs button {
@@ -321,7 +314,6 @@ body {
   color: black;
 }
 
-
 .language-section,
 .delicacy-section,
 .tourist-section,
@@ -335,14 +327,8 @@ body {
   font-family: Handelson;
 }
 
-
-.language-section {
-  margin-top: 30px;
-}
-
 .language-desc {
   font-size: 1.6rem;
-  line-height: 1.6;
 }
 
 /* LA UNION MAP */
@@ -387,6 +373,7 @@ body {
 /* PANGASINAN MAP*/
 .pangasinan-map-wrapper {
   width: 30%;
+  height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
