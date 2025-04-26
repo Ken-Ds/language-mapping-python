@@ -1,20 +1,28 @@
 # app/main.py
 from fastapi import FastAPI
-from app.routes.language_routes import router as language_router
-from app.routes.dialect_routes import router as dialect_router
-from app.routes.municipality_routes import router as municipality_router
-from app.routes.tourist_spot_routes import router as tourist_spot_router
-from app.routes.municipalitylanguage_routes import router as municipality_languages_router
-from app.routes.provincelanguage_routes import router as province_languages_router
-from app.routes.delicacy_routes import router as delicacy_router
+from fastapi.middleware.cors import CORSMiddleware
+from app.routes import language_routes, dialect_routes, province_routes, municipality_routes, phrase_routes, provincelanguage_routes, municipalitylanguage_routes
 
-app = FastAPI()
+app = FastAPI(
+    title="Language Mapping API",
+    description="API for comparing phrases and regional language data.",
+    version="1.0"
+)
 
-app.include_router(language_router)
-app.include_router(dialect_router)
-app.include_router(municipality_router)
-app.include_router(tourist_spot_router)
-app.include_router(municipality_languages_router)
-app.include_router(province_languages_router)
-app.include_router(delicacy_router)
+# Allow frontend requests (adjust if deploying)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+# Routes
+app.include_router(dialect_routes.router)
+app.include_router(language_routes.router)
+app.include_router(phrase_routes.router)
+app.include_router(province_routes.router)
+app.include_router(provincelanguage_routes.router)
+app.include_router(municipality_routes.router)
+app.include_router(municipalitylanguage_routes.router)
