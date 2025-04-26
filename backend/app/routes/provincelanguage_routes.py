@@ -11,3 +11,7 @@ def read_province_languages():
 @router.post("/provincelanguages")
 def add_province_language(p: ProvinceLanguage):
     return pls.create_province_language(p)
+
+@router.get("/provincelanguages/statistics/{province_id}")
+def get_language_statistics(province_id: str):
+    return pls.get_language_statistics_by_province(province_id)
