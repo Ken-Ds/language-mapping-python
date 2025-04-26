@@ -30,10 +30,10 @@
   
         <!-- Tabs -->
         <div class="province-tabs">
-          <button onclick="showSection('statistics')" class="active">STATISTICS</button>
-          <button onclick="showSection('language')">LANGUAGE</button>
-          <button onclick="showSection('delicacy')">DELICACY</button>
-          <button onclick="showSection('tourist')">TOURIST SPOT</button>
+          <button onclick="showSection('statistics');fetchLaUnionStatistics()" class="active">STATISTICS</button>
+          <button onclick="showSection('language');fetchLaUnionLanguage()">LANGUAGE</button>
+          <button onclick="showSection('delicacy');fetchLaUnionDelicacies()">DELICACY</button>
+          <button onclick="showSection('tourist');fetchLaUnionTouristSpots()">TOURIST SPOT</button>
         </div>
   
         <div class="tab-border"></div>
@@ -111,27 +111,8 @@
         if (clickedButton) {
           clickedButton.classList.add('active');
         }
-
-        // Fetch data when Statistics tab is clicked
-        if (sectionId === 'statistics') {
-          fetchLaUnionStatistics();
-        }        
-  
-        // Fetch language data ONLY when Language tab is clicked
-        if (sectionId === 'language') {
-          fetchLaUnionLanguage();
-        }
-
-        // Fetch delicacy data ONLY when Delicacy tab is clicked
-        if (sectionId === 'delicacy') {
-          fetchLaUnionDelicacies();
-        }
-
-        // Fetch delicacy data ONLY when Tourist Spot tab is clicked
-        if (sectionId === 'tourist') {
-          fetchLaUnionTouristSpots();
-        }
       }
     </script>
+    
   </body>
   
