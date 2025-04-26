@@ -478,3 +478,29 @@ h3 {
 .stat-item li {
   padding: 5px 0;
 }
+
+.table-container {
+  max-height: 400px; /* Set the desired height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; 
+  margin-top: 10px; /* Add some spacing above the table */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
