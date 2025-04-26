@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pangasinan</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="province-container">
+    <!-- Left Side: Content -->
+    <div class="province-left">
+      <!-- Back Button -->
+      <div class="province-back-button">
+        <a href="index.html">&#8592;</a>
+      </div>
+
+      <!-- Title & Description -->
+      <div class="province-content">
+        <h2>PANGASINAN</h2>
+        <h3 class="province-subtitle">“A Taste of Tradition by the Sea”</h3>
+        <p>
+          Pangasinan is where coastlines stretch endlessly and culture flows
+          as deep as the sea. The province offers a calming blend of nature,
+          heritage, and hospitality. Known for its flavorful cuisine and strong
+          sense of community, it celebrates life through every dish, dance, and
+          devotion. In Pangasinan, you don’t just visit — you feel at home.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="province-tabs">
+        <button onclick="showSection('statistics')" class="active">STATISTICS</button>
+        <button onclick="showSection('language')">LANGUAGE</button>
+        <button onclick="showSection('delicacy')">DELICACY</button>
+        <button onclick="showSection('tourist')">TOURIST SPOT</button>
+      </div>
+
+      <!-- Border under tabs -->
+      <div class="tab-border"></div>
+
+      <!-- Sections -->
+      <div id="statistics" class="province-section">
+        <h3>Statistics Section</h3>
+        <p>This shows the statistics about the languages spoken across Pangasinan's municipalities.</p>
+        <div class="columns">
+          <span>EACH MUNICIPALITY(s)</span>
+          <span>OVERALL (TOP 10)</span>
+        </div>
+      </div>
+
+      <div id="language" class="province-section" style="display: none;">
+        <h3>Language Section</h3>
+        <p>This presents the major languages spoken by the people of Pangasinan, gathered from survey data.</p>
+      </div>
+
+      <div id="delicacy" class="province-section" style="display: none;">
+        <h3>Delicacy Section</h3>
+        <p>Here are some iconic dishes and delicacies from Pangasinan that you must experience!</p>
+      </div>
+
+      <div id="tourist" class="province-section" style="display: none;">
+        <h3>Tourist Spots Section</h3>
+        <p>Discover the top tourist attractions and destinations that make Pangasinan unforgettable.</p>
+      </div>
+    </div>
+
+    <!-- Right Side: Map -->
+    <div class="pangasinan-map-wrapper">
+      <img src="images/pangasinanMap.png" alt="Map of Pangasinan" />
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.province-section');
+      sections.forEach(sec => sec.style.display = 'none');
+
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
+
+      // Update active tab button
+      const buttons = document.querySelectorAll('.province-tabs button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.province-tabs button[onclick="showSection('${sectionId}')"]`).classList.add('active');
+    }
+  </script>
+</body>
+</html>
