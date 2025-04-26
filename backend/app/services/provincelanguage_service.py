@@ -36,9 +36,9 @@ def get_language_statistics_by_province(province_id: str):
     """, (province_id,))
     language_data = cursor.fetchall()
 
-    # Format the percentage as a string with two decimal places
+    # Format the percentage as a string with two decimal places (no extra multiplication)
     for row in language_data:
-        row['Percentage'] = f"{row['Percentage'] * 100:.2f}%"  # Convert decimal to percentage string
+        row['Percentage'] = f"{row['Percentage']:.2f}%"  # Keep the percentage as-is
 
     cursor.close()
     conn.close()
