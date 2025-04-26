@@ -1,44 +1,45 @@
 @font-face {
   font-family: 'Alegreya Sans'; 
-  src: url('../font/Alegreya Sans Regular.ttf') format('truetype');
+  src: url('font/Alegreya%20Sans%20Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Cinzel';
-  src: url('../font/Cinzel Bold.ttf') format('truetype');
+  src: url('font/Cinzel%20Bold.ttf') format('truetype');
   font-style: normal; 
   font-weight: bold;  
 }
 
 @font-face {
   font-family: 'Copperplate';
-  src: url('../font/CopperplateGothicStd-29BC.ttf') format('truetype');
+  src: url('font/CopperplateGothicStd-29BC.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Handelson';
-  src: url('../font/Handelson Five.ttf') format('truetype');
+  src: url('font/Handelson%20Five.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Tenor';
-  src: url('../font/TenorSans-Regular.ttf') format('truetype');
+  src: url('font/TenorSans-Regular.ttf') format('truetype');
   font-style: normal;
   font-weight: bold;
 }
 
 @font-face {
   font-family: 'Rust';
-  src: url('../font/IntroRust-Line.otf') format('opentype');
+  src: url('font/IntroRust-Line.otf') format('opentype');
   font-style: normal;
   font-weight: normal;
 }
+
 
 /* MAIN PAGE */
 
@@ -411,4 +412,30 @@ body {
   height: 2px;
   background-color: #4a2f19; 
   margin: 10px auto 20px auto;
+}
+
+.table-container {
+  max-height: 400px; /* Set the desired height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; 
+  margin-top: 10px; /* Add some spacing above the table */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
