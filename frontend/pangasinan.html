@@ -31,7 +31,7 @@
       <!-- Tabs -->
       <div class="province-tabs">
         <button onclick="showSection('statistics')" class="active">STATISTICS</button>
-        <button onclick="showSection('language')">LANGUAGE</button>
+        <button onclick="showSection('language'); fetchPangasinanLanguage();">LANGUAGE</button>
         <button onclick="showSection('delicacy')">DELICACY</button>
         <button onclick="showSection('tourist')">TOURIST SPOT</button>
       </div>
@@ -50,6 +50,16 @@
 
       <div id="language" class="language-section" style="display: none;">
         <p>This presents the major languages spoken by the people of Pangasinan, gathered from survey data.</p>
+        <div class="table-container">
+          <table id="phraseTable">
+            <thead>
+              <!-- Dynamic header will be inserted here -->
+            </thead>
+            <tbody>
+              <!-- Dynamic rows will be inserted here -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="delicacy" class="delicacy-section" style="display: none;">
@@ -67,30 +77,30 @@
     </div>
   </div>
 
+  <!-- Section Toggle Script -->
   <script>
     function showSection(sectionId) {
-      // Get all section IDs
       const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
-  
-      // Loop through each section
       sectionIds.forEach(id => {
         const section = document.getElementById(id);
         if (section) {
           section.style.display = (id === sectionId) ? 'block' : 'none';
         }
       });
-  
-      // Handle active button class
+
       const buttons = document.querySelectorAll('.province-tabs button');
       buttons.forEach(btn => btn.classList.remove('active'));
-  
+
       const clickedButton = Array.from(buttons).find(btn =>
-        btn.getAttribute('onclick') === `showSection('${sectionId}')`
+        btn.getAttribute('onclick')?.includes(`showSection('${sectionId}')`)
       );
       if (clickedButton) {
         clickedButton.classList.add('active');
       }
     }
   </script>
+
+  <!-- Link to fetcher script -->
+  <script src="js/pangasinan.js"></script>
 </body>
 </html>
