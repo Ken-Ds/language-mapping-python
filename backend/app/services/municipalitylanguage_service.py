@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from app.db import get_connection
 from app.models import MunicipalityLanguage
 
@@ -14,15 +15,18 @@ def get_top3_dialects_by_municipality(municipality_id: str):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     query = """
-        SELECT d.DIALECT_ID, d.DIALECT_NAME, COUNT(*) AS usage_count
+        SELECT 
+            d.DIALECT_ID, 
+            d.DIALECT_NAME, 
+            ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM municipalitylanguages WHERE MUNICIPALITY_ID = %s)), 2) AS percentage
         FROM municipalitylanguages ml
         JOIN dialects d ON ml.DIALECT_ID = d.DIALECT_ID
         WHERE ml.MUNICIPALITY_ID = %s
         GROUP BY d.DIALECT_ID
-        ORDER BY usage_count DESC
+        ORDER BY percentage DESC
         LIMIT 3
     """
-    cursor.execute(query, (municipality_id,))
+    cursor.execute(query, (municipality_id, municipality_id))
     results = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -30,6 +34,10 @@ def get_top3_dialects_by_municipality(municipality_id: str):
     if not results:
         raise HTTPException(status_code=404, detail="No dialects found for this municipality")
     
+    # Add a percent sign to the percentage field
+    for result in results:
+        result['percentage'] = f"{result['percentage']}%"
+
     return results
 
 def create_municipality_language(m: MunicipalityLanguage):

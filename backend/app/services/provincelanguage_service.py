@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from app.db import get_connection
 from app.models import ProvinceLanguage
 
@@ -28,6 +29,10 @@ def get_top10_dialects_by_province(province_id: str):
 
     if not results:
         raise HTTPException(status_code=404, detail="No dialects found for this province")
+    
+    # Add a percent sign to the PERCENTAGE field with two decimal points
+    for result in results:
+        result['PERCENTAGE'] = f"{result['PERCENTAGE']:.2f}%"
 
     return results
 
