@@ -40,7 +40,7 @@
       <div class="tab-border"></div>
 
       <!-- Sections -->
-      <div id="statistics" class="province-section">
+      <div id="statistics" class="statistics-section">
         <h3>Statistics Section</h3>
         <p>This shows the statistics about the languages spoken in the area.</p>
         <div class="columns">
@@ -49,17 +49,17 @@
         </div>
       </div>
 
-      <div id="language" class="province-section" style="display: none;">
+      <div id="language" class="language-section" style="display: none;">
         <h3>Language Section</h3>
         <p>This presents the languages identified from translated words based on the statistics results.</p>
       </div>
 
-      <div id="delicacy" class="province-section" style="display: none;">
+      <div id="delicacy" class="delicacy-section" style="display: none;">
         <h3>Delicacy Section</h3>
         <p>These are the famous delicacies you must try when visiting Ilocos Sur.</p>
       </div>
 
-      <div id="tourist" class="province-section" style="display: none;">
+      <div id="tourist" class="tourist-section" style="display: none;">
         <h3>Tourist Spots Section</h3>
         <p>These are the tourist destinations that are popular and well-loved in Ilocos Sur.</p>
       </div>
@@ -73,17 +73,27 @@
 
   <script>
     function showSection(sectionId) {
-      // Hide all sections
-      const sections = document.querySelectorAll('.province-section');
-      sections.forEach(sec => sec.style.display = 'none');
-
-      // Show the selected section
-      document.getElementById(sectionId).style.display = 'block';
-
-      // Update active tab button
+      // Get all section IDs
+      const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
+  
+      // Loop through each section
+      sectionIds.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) {
+          section.style.display = (id === sectionId) ? 'block' : 'none';
+        }
+      });
+  
+      // Handle active button class
       const buttons = document.querySelectorAll('.province-tabs button');
       buttons.forEach(btn => btn.classList.remove('active'));
-      document.querySelector(`.province-tabs button[onclick="showSection('${sectionId}')"]`).classList.add('active');
+  
+      const clickedButton = Array.from(buttons).find(btn =>
+        btn.getAttribute('onclick') === `showSection('${sectionId}')`
+      );
+      if (clickedButton) {
+        clickedButton.classList.add('active');
+      }
     }
   </script>
 </body>
