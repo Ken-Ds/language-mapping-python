@@ -12,6 +12,43 @@ def get_all_languages():
     conn.close()
     return results
 
+def get_languages_by_municipality(municipality_id: str):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = """
+        SELECT DISTINCT l.*
+        FROM languages l
+        JOIN municipalitylanguages ml ON l.LANGUAGE_ID = ml.LANGUAGE_ID
+        WHERE ml.MUNICIPALITY_ID = %s
+    """
+    cursor.execute(query, (municipality_id,))
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    if not results:
+        raise HTTPException(status_code=404, detail="No languages found for this municipality")
+    return results
+
+def get_top3_languages_by_municipality(municipality_id: str):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = """
+        SELECT l.*, COUNT(*) as language_count
+        FROM languages l
+        JOIN municipalitylanguages ml ON l.LANGUAGE_ID = ml.LANGUAGE_ID
+        WHERE ml.MUNICIPALITY_ID = %s
+        GROUP BY l.LANGUAGE_ID
+        ORDER BY language_count DESC
+        LIMIT 3
+    """
+    cursor.execute(query, (municipality_id,))
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    if not results:
+        raise HTTPException(status_code=404, detail="No languages found for this municipality")
+    return results
+
 def create_language(language: Language):
     conn = get_connection()
     cursor = conn.cursor()

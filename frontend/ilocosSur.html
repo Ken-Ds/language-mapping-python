@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ilocos Sur</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="province-container">
+    <!-- Left Side: Content -->
+    <div class="province-left">
+      <!-- Back Button -->
+      <div class="province-back-button">
+        <a href="index.html">&#8592;</a>
+      </div>
+
+      <!-- Title & Description -->
+      <div class="province-content">
+        <h2>ILOCOS SUR</h2>
+        <h3 class="province-subtitle">“Where Yesterday Lives in Every Moment”</h3>
+        <p>
+          Ilocos Sur is a timeless tapestry of culture and charm. With its deep
+          respect for history and craftsmanship, the province invites you to
+          slow down and savor tradition. From local arts to age-old practices,
+          everything is woven with care and pride. It’s a living museum with 
+          a heart that still beats strong.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="province-tabs">
+        <button onclick="showSection('statistics')" class="active">STATISTICS</button>
+        <button onclick="showSection('language')">LANGUAGE</button>
+        <button onclick="showSection('delicacy')">DELICACY</button>
+        <button onclick="showSection('tourist')">TOURIST SPOT</button>
+      </div>
+
+      <!-- Border under tabs -->
+      <div class="tab-border"></div>
+
+      <!-- Sections -->
+      <div id="statistics" class="statistics-section">
+        <p>This shows the statistics about the languages spoken in the area.</p>
+        <div class="columns">
+          <span>EACH MUNICIPALITY(s)</span>
+          <span>OVERALL (TOP 10)</span>
+        </div>
+      </div>
+
+      <div id="language" class="language-section" style="display: none;">
+        <p>This presents the languages identified from translated words based on the statistics results.</p>
+      </div>
+
+      <div id="delicacy" class="delicacy-section" style="display: none;">
+        <p>These are the famous delicacies you must try when visiting Ilocos Sur.</p>
+      </div>
+
+      <div id="tourist" class="tourist-section" style="display: none;">
+        <p>These are the tourist destinations that are popular and well-loved in Ilocos Sur.</p>
+      </div>
+    </div>
+
+    <!-- Right Side: Map -->
+    <div class="ilocos-sur-map-wrapper">
+      <img src="images/ilocosSurMap.png" alt="Ilocos Sur Municipalities" />
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      // Get all section IDs
+      const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
+  
+      // Loop through each section
+      sectionIds.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) {
+          section.style.display = (id === sectionId) ? 'block' : 'none';
+        }
+      });
+  
+      // Handle active button class
+      const buttons = document.querySelectorAll('.province-tabs button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+  
+      const clickedButton = Array.from(buttons).find(btn =>
+        btn.getAttribute('onclick') === `showSection('${sectionId}')`
+      );
+      if (clickedButton) {
+        clickedButton.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

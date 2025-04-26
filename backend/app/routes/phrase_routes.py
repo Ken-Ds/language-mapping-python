@@ -1,5 +1,5 @@
 # app/routes/phrase_routes.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from app.models import Phrase
 from app.services import phrase_service as ps
 
@@ -20,3 +20,7 @@ def modify_phrase(phrase_id: str, p: Phrase):
 @router.delete("/phrases/{phrase_id}")
 def remove_phrase(phrase_id: str):
     return ps.delete_phrase(phrase_id)
+
+@router.get("/phrases/comparison/{province_id}")
+def get_phrase_comparison(province_id: str):
+    return ps.get_phrase_comparison_by_province(province_id)

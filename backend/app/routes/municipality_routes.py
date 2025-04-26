@@ -9,6 +9,10 @@ router = APIRouter()
 def read_municipalities():
     return ms.get_all_municipalities()
 
+@router.get("/municipalities/province/{province_id}", response_model=list[Municipality])
+def read_municipalities_by_province(province_id: str):
+    return ms.get_municipalities_by_province(province_id)
+
 @router.post("/municipalities")
 def add_municipality(municipality: Municipality):
     return ms.create_municipality(municipality)

@@ -20,3 +20,19 @@ def modify_dialect(dialect_id: str, dialect: Dialect):
 @router.delete("/dialects/{dialect_id}")
 def remove_dialect(dialect_id: str):
     return ds.delete_dialect(dialect_id)
+
+@router.get("/dialects/municipality/{municipality_id}")
+def read_dialects_by_municipality(municipality_id: str):
+    return ds.get_dialects_by_municipality(municipality_id)
+
+@router.get("/dialects/province/{province_id}")
+def read_dialects_by_province(province_id: str):
+    return ds.get_dialects_by_province(province_id)
+
+@router.get("/dialects/municipality/{municipality_id}/top3")
+def read_top3_dialects_by_municipality(municipality_id: str):
+    return ds.get_top3_dialects_by_municipality(municipality_id)
+
+@router.get("/dialects/province/{province_id}/top10")
+def read_top10_dialects_by_province(province_id: str):
+    return ds.get_top10_dialects_by_province(province_id)

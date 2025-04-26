@@ -11,6 +11,17 @@ def get_all_municipalities():
     conn.close()
     return results
 
+def get_municipalities_by_province(province_id: str):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM municipalities WHERE PROVINCE_ID = %s", (province_id,))
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    if not results:
+        raise HTTPException(status_code=404, detail="No municipalities found for this province")
+    return results
+
 def create_municipality(m: Municipality):
     conn = get_connection()
     cursor = conn.cursor()
