@@ -30,21 +30,32 @@
 
       <!-- Tabs -->
       <div class="province-tabs">
-        <button onclick="showSection('statistics')" class="active">STATISTICS</button>
+        <button onclick="showSection('statistics'); fetchIlocosNorteStatistics();" class="active">STATISTICS</button>
         <button onclick="showSection('language'); fetchIlocosNorteLanguage();">LANGUAGE</button>
-        <button onclick="showSection('delicacy')">DELICACY</button>
-        <button onclick="showSection('tourist')">TOURIST SPOT</button>
+        <button onclick="showSection('delicacy'); fetchIlocosNorteDelicacies();">DELICACY</button>
+        <button onclick="showSection('tourist'); fetchIlocosNorteTouristSpots();">TOURIST SPOT</button>
       </div>
 
       <!-- Border under tabs -->
       <div class="tab-border"></div>
 
-      <!-- Sections -->
+      <!-- SECTIONS -->
       <div id="statistics" class="statistics-section">
-        <p>This shows the statistics about the languages spoken in Ilocos Norte.</p>
-        <div class="columns">
-          <span>EACH MUNICIPALITY(s)</span>
+        <p>This shows the statistics about the languages spoken in the area.</p>
+        <!-- <div class="columns">
+          <span>EACH MUNICIPALITY(TOP 3)</span>
           <span>OVERALL (TOP 10)</span>
+        </div> -->
+
+        <div class="columns">
+          <div class="municipality-stats">
+            <h3>Top 3 Languages for Each Municipality</h3>
+            <div id="municipalityStats"></div> <!-- Placeholder for dynamic data -->
+          </div>
+          <div class="overall-stats">
+            <h3>Overall Top 10 Languages</h3>
+            <div id="overallStats"></div> <!-- Placeholder for dynamic data -->
+          </div>
         </div>
       </div>
 
@@ -61,13 +72,17 @@
           </table>
         </div>
       </div>
+    
+      <div id="delicacy" class="delicacy-section" style="display:none;">
+        <p>These are foods that are famous in this place.</p>
 
-      <div id="delicacy" class="delicacy-section" style="display: none;">
-        <p>Here are some iconic dishes and delicacies from Ilocos Norte that you must experience!</p>
+        <ul class="delicacy-list"></ul>
       </div>
 
-      <div id="tourist" class="tourist-section" style="display: none;">
-        <p>Discover the top tourist attractions and destinations that make Ilocos Norte unforgettable.</p>
+      <div id="tourist" class="tourist-section" style="display:none;">
+        <p>These are tourist destinations that are popular in this place.</p>
+      
+        <ul class="tourist-list"></ul>
       </div>
     </div>
 

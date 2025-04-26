@@ -63,3 +63,166 @@ async function fetchPangasinanLanguage() {
     tbody.appendChild(tr);
   });
 }
+
+async function fetchPangasinanStatistics() {
+  try {
+    const provinceId = 'P004';
+    const response = await fetch(`http://127.0.0.1:8000/statistics/${provinceId}`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    const municipalityStatsSection = document.querySelector('#municipalityStats');
+    const overallStatsSection = document.querySelector('#overallStats');
+
+    municipalityStatsSection.innerHTML = ''; // Clear existing stats
+    overallStatsSection.innerHTML = ''; // Clear existing stats
+
+    if (data.length === 0) {
+      const noDataItem = document.createElement('p');
+      noDataItem.textContent = 'No language data available.';
+      municipalityStatsSection.appendChild(noDataItem);
+      overallStatsSection.appendChild(noDataItem);
+      return;
+    }
+
+    // Step 1: Display Top 3 Languages for Each Municipality
+    data.forEach(municipality => {
+      const statItem = document.createElement('div');
+      statItem.classList.add('stat-item');
+
+      const title = document.createElement('h4');
+      title.textContent = municipality.name; // Municipality Name
+      statItem.appendChild(title);
+
+      const languageList = document.createElement('ul');
+
+      municipality.languages.slice(0, 3).forEach(language => { // Only take top 3 languages
+        const listItem = document.createElement('li');
+        listItem.textContent = language;
+        languageList.appendChild(listItem);
+      });
+
+      statItem.appendChild(languageList);
+      municipalityStatsSection.appendChild(statItem);
+    });
+
+    // Step 2: Display Overall Top 10 Languages
+    const languageCounts = {};
+
+    data.forEach(municipality => {
+      municipality.languages.forEach(language => {
+        if (!languageCounts[language]) {
+          languageCounts[language] = 0;
+        }
+        languageCounts[language]++;
+      });
+    });
+
+    const topLanguages = Object.entries(languageCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([language]) => language);
+
+    const overallStatItem = document.createElement('div');
+    overallStatItem.classList.add('stat-item');
+
+    const overallTitle = document.createElement('h4');
+    overallTitle.textContent = 'Overall Top 10 Languages';
+    overallStatItem.appendChild(overallTitle);
+
+    const overallLanguageList = document.createElement('ul');
+
+    topLanguages.forEach(language => {
+      const listItem = document.createElement('li');
+      listItem.textContent = language;
+      overallLanguageList.appendChild(listItem);
+    });
+
+    overallStatItem.appendChild(overallLanguageList);
+    overallStatsSection.appendChild(overallStatItem);
+
+  } catch (error) {
+    console.error('Error fetching La Union statistics:', error);
+  }
+}
+
+
+
+async function fetchPangasinanDelicacies() {
+  try {
+    const provinceId = 'P004';
+    const response = await fetch(`http://127.0.0.1:8000/popular/foods/${provinceId}`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    const delicacySection = document.querySelector('#delicacy');
+    const delicacyList = delicacySection.querySelector('.delicacy-list');
+
+    delicacyList.innerHTML = ''; // Clear existing list
+
+    if (data.length === 0) {
+      const noDataItem = document.createElement('li');
+      noDataItem.textContent = 'No delicacies available.';
+      delicacyList.appendChild(noDataItem);
+      return;
+    }
+
+    // Create list items for each delicacy
+    data.forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.textContent = item.NAME;
+      delicacyList.appendChild(listItem);
+    });
+
+  } catch (error) {
+    console.error('Error fetching La Union delicacy data:', error);
+  }
+}
+
+async function fetchPangasinanTouristSpots() {
+  try {
+    const provinceId = 'P004';
+    const response = await fetch(`http://127.0.0.1:8000/popular/tourist-spots/${provinceId}`);
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+
+    const touristSection = document.querySelector('#tourist');
+    const touristList = touristSection.querySelector('.tourist-list');
+
+    touristList.innerHTML = ''; // Clear existing list
+
+    if (data.length === 0) {
+      const noDataItem = document.createElement('li');
+      noDataItem.textContent = 'No tourist spots available.';
+      touristList.appendChild(noDataItem);
+      return;
+    }
+
+    // Create list items for each tourist spot
+    data.forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+        <div class="tourist-item">
+          <div class="tourist-name">${item.NAME}</div>
+          <div class="tourist-location">${item.LOCATION}</div>
+        </div>
+      `;
+      touristList.appendChild(listItem);
+    });
+
+  } catch (error) {
+    console.error('Error fetching La Union tourist spot data:', error);
+  }
+}
