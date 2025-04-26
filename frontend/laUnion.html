@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>La Union - Statistics</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="../frontend/js/laUnion.js" defer></script>
+
 </head>
 <body>
     <div class="province-container">
@@ -39,22 +41,44 @@
         <!-- SECTIONS -->
         <div id="statistics" class="statistics-section">
           <p>This shows the statistics about the languages spoken in the area.</p>
-          <div class="columns">
+          <!-- <div class="columns">
             <span>EACH MUNICIPALITY(TOP 3)</span>
             <span>OVERALL (TOP 10)</span>
+          </div> -->
+
+          <div class="columns">
+            <div class="municipality-stats">
+              <h3>Top 3 Languages for Each Municipality</h3>
+              <div id="municipalityStats"></div> <!-- Placeholder for dynamic data -->
+            </div>
+            <div class="overall-stats">
+              <h3>Overall Top 10 Languages</h3>
+              <div id="overallStats"></div> <!-- Placeholder for dynamic data -->
+            </div>
           </div>
         </div>
   
         <div id="language" class="language-section" style="display:none;">
           <p>This presents the languages identified from translated words...</p>
+          
+          <!-- TABLE FOR LANGUAGE TRANSLATIONS -->
+          <table id="phraseTable">
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+      </div>
         </div>
   
         <div id="delicacy" class="delicacy-section" style="display:none;">
           <p>These are foods that are famous in this place.</p>
+
+          <ul class="delicacy-list"></ul>
         </div>
   
         <div id="tourist" class="tourist-section" style="display:none;">
           <p>These are tourist destinations that are popular in this place.</p>
+        
+          <ul class="tourist-list"></ul>
         </div>
   
       </div>
@@ -67,29 +91,45 @@
   
     <script>
       function showSection(sectionId) {
-        // Get all section IDs
         const sectionIds = ['statistics', 'language', 'delicacy', 'tourist'];
-    
-        // Loop through each section
+  
         sectionIds.forEach(id => {
           const section = document.getElementById(id);
           if (section) {
             section.style.display = (id === sectionId) ? 'block' : 'none';
           }
         });
-    
-        // Handle active button class
+  
         const buttons = document.querySelectorAll('.province-tabs button');
         buttons.forEach(btn => btn.classList.remove('active'));
-    
+  
         const clickedButton = Array.from(buttons).find(btn =>
           btn.getAttribute('onclick') === `showSection('${sectionId}')`
         );
         if (clickedButton) {
           clickedButton.classList.add('active');
         }
+
+        // Fetch data when Statistics tab is clicked
+        if (sectionId === 'statistics') {
+          fetchLaUnionStatistics();
+        }        
+  
+        // Fetch language data ONLY when Language tab is clicked
+        if (sectionId === 'language') {
+          fetchLaUnionLanguage();
+        }
+
+        // Fetch delicacy data ONLY when Delicacy tab is clicked
+        if (sectionId === 'delicacy') {
+          fetchLaUnionDelicacies();
+        }
+
+        // Fetch delicacy data ONLY when Tourist Spot tab is clicked
+        if (sectionId === 'tourist') {
+          fetchLaUnionTouristSpots();
+        }
       }
     </script>
-  
   </body>
   

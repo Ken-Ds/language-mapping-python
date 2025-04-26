@@ -412,3 +412,68 @@ body {
   background-color: #4a2f19; 
   margin: 10px auto 20px auto;
 }
+
+
+
+
+
+.tourist-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Create 2 columns */
+  gap: 20px; /* Space between columns */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tourist-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 12px;
+}
+
+.tourist-name {
+  font-weight: bold;
+}
+
+.tourist-location {
+  color: #555;
+}
+
+
+
+
+.statistics-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.municipality-stats, .overall-stats {
+  width: 48%;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.stat-item {
+  margin-bottom: 10px;
+}
+
+.stat-item ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.stat-item li {
+  padding: 5px 0;
+}
